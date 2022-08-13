@@ -29,8 +29,6 @@ func hello(ctx echo.Context) error {
 
 func main() {
 	server := echo.New()
-
 	server.GET(ROOT_PATH, hello)
-
 	server.Logger.Fatal(server.Start(":" + PORT))
 }
