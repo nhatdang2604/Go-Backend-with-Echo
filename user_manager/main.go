@@ -1,10 +1,10 @@
 package main
 
 import (
-	"log"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 )
 
 const (
@@ -31,33 +31,33 @@ type LoginResponse struct {
 }
 
 //Handler for the root path
-func hello(ctx echo.Context) error {
+func Hello(ctx echo.Context) error {
 	data := Message{
 		Text: "Hello World",
 	}
 	return ctx.JSON(http.StatusOK, data)
 }
 
-func login(ctx echo.Context) error {
-
-	request := new(LoginRequest)
-	ctx.Bind(request)
-
-	log.Printf("Request data: %v\r\n", request)
-
-	if "admin" != request.Username ||
-		"admin" != request.Password {
-		return ctx.String(http.StatusUnauthorized, "login failed")
-	}
+func Login(ctx echo.Context) error {
 
 	return ctx.JSON(http.StatusOK, &LoginResponse{
 		Token: "123456",
 	})
 }
 
+func AuthValidator(username string, password string, ctx echo.Context) (bool, error) {
+	if "admin" != username ||
+		"admin" != password {
+		return false, nil
+	}
+
+	return true, nil
+}
+
 func main() {
 	server := echo.New()
-	server.GET(ROOT_PATH, hello)
-	server.POST(LOGIN_PATH, login)
+
+	server.GET(ROOT_PATH, Hello)
+	server.POST(LOGIN_PATH, Login, middleware.BasicAuth(AuthValidator))
 	server.Logger.Fatal(server.Start(":" + PORT))
 }
