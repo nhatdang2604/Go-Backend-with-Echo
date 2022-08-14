@@ -47,7 +47,7 @@ func login(ctx echo.Context) error {
 
 	if "admin" != request.Username ||
 		"admin" != request.Password {
-		return ctx.JSON(http.StatusUnauthorized, "login failed")
+		return ctx.String(http.StatusUnauthorized, "login failed")
 	}
 
 	return ctx.JSON(http.StatusOK, &LoginResponse{
