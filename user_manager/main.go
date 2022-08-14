@@ -23,7 +23,10 @@ func main() {
 	//Middlewares must be registered before adding root path handler
 	server.Use(middleware.Logger())
 
+	//Add handlers
 	server.GET(ROOT_PATH, handler.Hello) //root path handler
 	server.POST(LOGIN_PATH, handler.Login, middleware.BasicAuth(mw.BasicAuth))
+
+	//Run the server
 	server.Logger.Fatal(server.Start(":" + PORT))
 }
