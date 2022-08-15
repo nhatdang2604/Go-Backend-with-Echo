@@ -14,7 +14,7 @@ const (
 
 	//Paths
 	ROOT_PATH  = "/"
-	LOGIN_PATH = "/login"
+	LOGIN_PATH = "/login/"
 )
 
 func main() {
@@ -22,9 +22,10 @@ func main() {
 
 	//Middlewares must be registered before adding root path handler
 	server.Use(middleware.Logger())
+	isLoggedIn := middleware.JWT([]byte(handler.SECRET_KEY)) //building a logging checker middleware
 
 	//Add handlers
-	server.GET(ROOT_PATH, handler.Hello) //root path handler
+	server.GET(ROOT_PATH, handler.Hello, isLoggedIn) //root path handler, using isLoggedIn middleware to authorize for only logged user to use
 	server.POST(LOGIN_PATH, handler.Login, middleware.BasicAuth(mw.BasicAuth))
 
 	//Run the server
