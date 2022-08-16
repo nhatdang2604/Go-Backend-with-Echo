@@ -1,6 +1,9 @@
 package main
 
 import (
+	"github.com/beego/beego/orm"
+	_ "github.com/go-sql-driver/mysql"
+	"github.com/golang/glog"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/nhatdang2604/Go-Backend-with-Echo/user_manager/constant"
@@ -8,7 +11,22 @@ import (
 	mw "github.com/nhatdang2604/Go-Backend-with-Echo/user_manager/middlewares"
 )
 
-const ()
+func init() {
+	orm.RegisterDriver("mysql", orm.DRMySQL)
+
+	//Database connection config
+	user := constant.DB_USER
+	password := constant.DB_PWD
+	dbName := constant.DB_NAME
+	charset := constant.DB_CHARSET
+
+	connectString := user + ":" + password + "@/" + dbName + "?charset=" + charset
+	err := orm.RegisterDataBase("default", "mysql", connectString)
+
+	if nil != err {
+		glog.Fatal("Failed to register the database")
+	}
+}
 
 func main() {
 

@@ -26,6 +26,12 @@ const (
 	EXPIRATION_KEY            = "exp"
 	CONTEXT_KEY_DEFAULT_VALUE = "user"
 
+	//Database config
+	DB_NAME    = "echotest"
+	DB_USER    = "dangkl123"
+	DB_PWD     = "812010"
+	DB_CHARSET = "utf8"
+
 	//secret key
 	// Note: storing secret key hardcodely is a bad design.
 	//	Only using for learning purpose
