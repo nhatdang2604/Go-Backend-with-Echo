@@ -11,6 +11,16 @@ type User struct {
 	Age  int32
 }
 
+var users = []User{
+	{Name: "test0", Age: 18},
+	{Name: "test1", Age: 19},
+	{Name: "test2", Age: 20},
+	{Name: "test3", Age: 21},
+	{Name: "test4", Age: 22},
+	{Name: "test5", Age: 23},
+	{Name: "test6", Age: 24},
+}
+
 func GetUser(ctx echo.Context) error {
 	return ctx.String(http.StatusOK, "API Get User")
 }
