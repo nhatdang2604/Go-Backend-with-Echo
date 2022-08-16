@@ -13,6 +13,12 @@ type User struct {
 	Age  int32
 }
 
+// func init() {
+
+// 	//init the model from database for Beego
+// 	orm.RegisterModel(new(User))
+// }
+
 //Mock data
 var users = []User{
 	{Name: "test0", Age: 18},

@@ -14,18 +14,30 @@ import (
 func init() {
 	orm.RegisterDriver("mysql", orm.DRMySQL)
 
-	//Database connection config
+	//Database config
 	user := constant.DB_USER
 	password := constant.DB_PWD
 	dbName := constant.DB_NAME
 	charset := constant.DB_CHARSET
 
+	//Connect the databse
 	connectString := user + ":" + password + "@/" + dbName + "?charset=" + charset
 	err := orm.RegisterDataBase("default", "mysql", connectString)
 
 	if nil != err {
-		glog.Fatal("Failed to register the database")
+		glog.Fatal("Failed to register the database: %v", err)
 	}
+
+	//Synchronize config in connection
+	name := "default" //database alias
+	force := true     //drop the table and re-create after running code
+	verbose := true   //logging on
+	err = orm.RunSyncdb(name, force, verbose)
+
+	if nil != err {
+		glog.Fatal("Failed to sync the database: %v", err)
+	}
+
 }
 
 func main() {
