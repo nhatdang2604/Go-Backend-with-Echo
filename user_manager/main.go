@@ -31,10 +31,10 @@ func main() {
 	groupv2.GET(constant.HELLO_PATH, handler.Hello2)
 
 	//Keep grouping for User APIs
-	groupUser := server.Group(constant.USER_GROUP_PATH, isLoggedIn, isAdmin)
+	groupUser := server.Group(constant.USER_GROUP_PATH, isLoggedIn)
 	groupUser.GET(constant.USER_GET_PATH, handler.GetUser)
-	groupUser.GET(constant.USER_UPDATE_PATH, handler.UpdateUser)
-	groupUser.GET(constant.USER_DELETE_PATH, handler.DeleteUser)
+	groupUser.GET(constant.USER_UPDATE_PATH, handler.UpdateUser, isAdmin)
+	groupUser.GET(constant.USER_DELETE_PATH, handler.DeleteUser, isAdmin)
 
 	//Run the server
 	server.Logger.Fatal(server.Start(":" + constant.PORT))

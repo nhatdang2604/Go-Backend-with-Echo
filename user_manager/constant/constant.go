@@ -10,8 +10,8 @@ const (
 	LOGIN_PATH       = "/login/"
 	ADMIN_PATH       = "/admin/"
 	HELLO_PATH       = "/hello/"
-	GROUP_API_PATH   = "/v2/"
-	USER_GROUP_PATH  = "/api/user/"
+	GROUP_API_PATH   = "/v2"       //removing foward slash at the end
+	USER_GROUP_PATH  = "/api/user" //removing foward slash at the end
 	USER_GET_PATH    = "/get-user/"
 	USER_UPDATE_PATH = "/update-user/"
 	USER_DELETE_PATH = "/delete-user/"
