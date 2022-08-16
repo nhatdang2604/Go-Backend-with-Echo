@@ -6,15 +6,19 @@ const (
 	PORT = "8088"
 
 	//Paths
-	ROOT_PATH        = "/"
-	LOGIN_PATH       = "/login/"
-	ADMIN_PATH       = "/admin/"
-	HELLO_PATH       = "/hello/"
-	GROUP_API_PATH   = "/v2"       //removing foward slash at the end
-	USER_GROUP_PATH  = "/api/user" //removing foward slash at the end
-	USER_GET_PATH    = "/get-user/"
-	USER_UPDATE_PATH = "/update-user/"
-	USER_DELETE_PATH = "/delete-user/"
+	ROOT_PATH         = "/"
+	LOGIN_PATH        = "/login/"
+	ADMIN_PATH        = "/admin/"
+	HELLO_PATH        = "/hello/"
+	USER_GET_PATH     = "/get/"
+	USER_UPDATE_PATH  = "/update/"
+	USER_DELETE_PATH  = "/delete/"
+	USER_GET_ALL_PATH = "/get-all/"
+
+	//Grouping Paths
+	//Removing foward slash at the end
+	GROUP_API_PATH  = "/v2"
+	USER_GROUP_PATH = "/api/user"
 
 	//jwt keys
 	USERNAME_KEY              = "username"

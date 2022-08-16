@@ -36,6 +36,7 @@ func main() {
 	groupUser.GET(constant.USER_GET_PATH, handler.GetUser)
 	groupUser.GET(constant.USER_UPDATE_PATH, handler.UpdateUser, isAdmin)
 	groupUser.GET(constant.USER_DELETE_PATH, handler.DeleteUser, isAdmin)
+	groupUser.GET(constant.USER_GET_ALL_PATH, handler.GetAllUser)
 
 	//Run the server
 	server.Logger.Fatal(server.Start(":" + constant.PORT))

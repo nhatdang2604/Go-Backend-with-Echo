@@ -1,7 +1,9 @@
 package handler
 
 import (
+	"encoding/json"
 	"net/http"
+	"time"
 
 	"github.com/labstack/echo/v4"
 )
@@ -35,5 +37,22 @@ func DeleteUser(ctx echo.Context) error {
 }
 
 func GetAllUser(ctx echo.Context) error {
+
+	//Header editing
+	ctx.Response().Header().Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
+	ctx.Response().WriteHeader(http.StatusOK)
+
+	encoder := json.NewEncoder(ctx.Response())
+	for _, user := range users {
+		if err := encoder.Encode(user); nil != err {
+			return err
+		}
+
+		ctx.Response().Flush()
+
+		//Sleep to simulate heavyweight process
+		time.Sleep(1 * time.Second)
+	}
+
 	return nil
 }
