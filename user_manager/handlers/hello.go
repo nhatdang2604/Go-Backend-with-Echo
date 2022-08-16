@@ -26,3 +26,7 @@ func Hello(ctx echo.Context) error {
 	}
 	return ctx.JSON(http.StatusOK, data)
 }
+
+func Hello2(ctx echo.Context) error {
+	return ctx.String(http.StatusOK, "Hello 2")
+}

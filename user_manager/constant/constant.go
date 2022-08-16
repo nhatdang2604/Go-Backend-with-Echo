@@ -17,7 +17,7 @@ const (
 	CONTEXT_KEY_DEFAULT_VALUE = "user"
 
 	//secret key
-	// Note: storing secret key hardcodely is a bad design
-	//	only using for learning purpose
+	// Note: storing secret key hardcodely is a bad design.
+	//	Only using for learning purpose
 	SECRET_KEY = "secret_key"
 )
