@@ -31,7 +31,7 @@ func main() {
 	groupv2.GET(constant.HELLO_PATH, handler.Hello2)
 
 	//Keep grouping for User APIs
-	groupUser := server.Group(constant.USER_GROUP_PATH)
+	groupUser := server.Group(constant.USER_GROUP_PATH, isLoggedIn, isAdmin)
 	groupUser.GET(constant.USER_GET_PATH, handler.GetUser)
 	groupUser.GET(constant.USER_UPDATE_PATH, handler.UpdateUser)
 	groupUser.GET(constant.USER_DELETE_PATH, handler.DeleteUser)
