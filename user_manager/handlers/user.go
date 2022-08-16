@@ -11,6 +11,7 @@ type User struct {
 	Age  int32
 }
 
+//Mock data
 var users = []User{
 	{Name: "test0", Age: 18},
 	{Name: "test1", Age: 19},
@@ -31,4 +32,8 @@ func UpdateUser(ctx echo.Context) error {
 
 func DeleteUser(ctx echo.Context) error {
 	return ctx.String(http.StatusOK, "API Delete User")
+}
+
+func GetAllUser(ctx echo.Context) error {
+	return nil
 }
