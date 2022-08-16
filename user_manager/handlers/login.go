@@ -26,7 +26,7 @@ func Login(ctx echo.Context) error {
 	claims := token.Claims.(jwt.MapClaims)
 	claims[constant.USERNAME_KEY] = username
 	claims[constant.ADMIN_KEY] = admin
-	claims[constant.EXPIRATION_KEY] = time.Now().Add(2 * time.Minute).Unix() //after 10 minutes => token out of date
+	claims[constant.EXPIRATION_KEY] = time.Now().Add(30 * time.Minute).Unix() //after 10 minutes => token out of date
 
 	sign, err := token.SignedString([]byte(constant.SECRET_KEY))
 

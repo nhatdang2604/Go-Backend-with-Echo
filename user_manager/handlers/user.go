@@ -11,10 +11,10 @@ import (
 )
 
 type User struct {
-	Id    int32  `orm:"auto;pk" json:"id"`
-	Name  string `orm:"size(30)" json:"name"`
-	Age   int32  `json:age`
-	Phone string `orm:"size(11) json:"phone"`
+	Id    int32  `orm:"auto" json:"id" form:"id"`
+	Name  string `orm:"size(30)" json:"name" form:"name"`
+	Age   int32  `json:"age" form:"age"`
+	Phone string `orm:"size(11)" json:"phone" form:"phone"`
 }
 
 func init() {
@@ -40,6 +40,7 @@ func AddUser(ctx echo.Context) error {
 	user := &User{}
 	if err := ctx.Bind(user); nil != err {
 		glog.Errorf("Binding user with error: %v\r\n", err)
+		return err
 	}
 
 	//Insert the bind user
@@ -48,11 +49,12 @@ func AddUser(ctx echo.Context) error {
 
 	if nil != err {
 		glog.Errorf("Insert user with error: %v\r\n", err)
+		return err
 	}
 
-	glog.Info("Insert userat row %d", id)
+	glog.Infof("Insert user at row %d\r\n", id)
 
-	return nil
+	return ctx.JSON(http.StatusOK, user)
 }
 
 func GetUser(ctx echo.Context) error {
