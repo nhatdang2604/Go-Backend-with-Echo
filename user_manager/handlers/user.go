@@ -113,7 +113,25 @@ func UpdateUser(ctx echo.Context) error {
 }
 
 func DeleteUser(ctx echo.Context) error {
-	return ctx.String(http.StatusOK, "API Delete User")
+
+	raw, err := strconv.Atoi(ctx.QueryParam(constant.PARAM_USER_ID))
+	if nil != err {
+		glog.Errorf("Invalid id value: %v\r\n", err)
+		return err
+	}
+
+	id := int32(raw)
+	user := &User{Id: id}
+
+	o := orm.NewOrm()
+	_, err = o.Delete(user)
+
+	if nil != err {
+		glog.Errorf("Error on deleting user with id=%v: %v \r\n", id, err)
+		return err
+	}
+
+	return ctx.String(http.StatusOK, "Delete successfully")
 }
 
 func GetAllUser(ctx echo.Context) error {
