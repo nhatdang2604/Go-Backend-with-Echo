@@ -21,6 +21,7 @@ func main() {
 	isAdmin := mw.AdminValidateMiddleware
 
 	//Add handlers
+	//NOTE: It's very important to put the middlewares in the function parameters's order in correct position
 	server.GET(constant.ROOT_PATH, handler.Hello, isLoggedIn) //root path handler, using isLoggedIn middleware to authorize for only logged user to use
 	server.GET(constant.ADMIN_PATH, handler.Hello, isLoggedIn, isAdmin)
 	server.POST(constant.LOGIN_PATH, handler.Login, middleware.BasicAuth(mw.BasicAuth))
