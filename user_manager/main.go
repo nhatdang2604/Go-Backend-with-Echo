@@ -26,6 +26,10 @@ func main() {
 	server.GET(constant.ADMIN_PATH, handler.Hello, isLoggedIn, isAdmin)
 	server.POST(constant.LOGIN_PATH, handler.Login, middleware.BasicAuth(mw.BasicAuth))
 
+	//Grouping API
+	groupv2 := server.Group(constant.GROUP_API_PATH)
+	groupv2.GET(constant.HELLO_PATH, handler.Hello2)
+
 	//Run the server
 	server.Logger.Fatal(server.Start(":" + constant.PORT))
 }

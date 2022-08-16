@@ -6,9 +6,11 @@ const (
 	PORT = "8088"
 
 	//Paths
-	ROOT_PATH  = "/"
-	LOGIN_PATH = "/login/"
-	ADMIN_PATH = "/admin/"
+	ROOT_PATH      = "/"
+	LOGIN_PATH     = "/login/"
+	ADMIN_PATH     = "/admin/"
+	HELLO_PATH     = "/hello/"
+	GROUP_API_PATH = "/v2/"
 
 	//jwt keys
 	USERNAME_KEY              = "username"
