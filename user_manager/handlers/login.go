@@ -12,8 +12,6 @@ import (
 	"github.com/nhatdang2604/Go-Backend-with-Echo/user_manager/models"
 )
 
-const ()
-
 func Login(ctx echo.Context) error {
 
 	username := ctx.Get(mw.USERNAME_KEY).(string)

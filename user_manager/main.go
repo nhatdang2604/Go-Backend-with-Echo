@@ -8,16 +8,7 @@ import (
 	mw "github.com/nhatdang2604/Go-Backend-with-Echo/user_manager/middlewares"
 )
 
-const (
-
-	//Address
-	PORT = "8088"
-
-	//Paths
-	ROOT_PATH  = "/"
-	LOGIN_PATH = "/login/"
-	ADMIN_PATH = "/admin/"
-)
+const ()
 
 func main() {
 	server := echo.New()
@@ -30,10 +21,10 @@ func main() {
 	isAdmin := mw.AdminValidateMiddleware
 
 	//Add handlers
-	server.GET(ROOT_PATH, handler.Hello, isLoggedIn) //root path handler, using isLoggedIn middleware to authorize for only logged user to use
-	server.GET(ADMIN_PATH, handler.Hello, isLoggedIn, isAdmin)
-	server.POST(LOGIN_PATH, handler.Login, middleware.BasicAuth(mw.BasicAuth))
+	server.GET(constant.ROOT_PATH, handler.Hello, isLoggedIn) //root path handler, using isLoggedIn middleware to authorize for only logged user to use
+	server.GET(constant.ADMIN_PATH, handler.Hello, isLoggedIn, isAdmin)
+	server.POST(constant.LOGIN_PATH, handler.Login, middleware.BasicAuth(mw.BasicAuth))
 
 	//Run the server
-	server.Logger.Fatal(server.Start(":" + PORT))
+	server.Logger.Fatal(server.Start(":" + constant.PORT))
 }
