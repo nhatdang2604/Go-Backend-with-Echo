@@ -42,6 +42,7 @@ func init() {
 
 func main() {
 
+	//Building the server
 	server := echo.New()
 
 	//Middlewares must be registered before adding root path handler
