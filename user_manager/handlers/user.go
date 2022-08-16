@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
-	"time"
 
 	"github.com/beego/beego/orm"
 	"github.com/golang/glog"
@@ -149,9 +148,6 @@ func GetAllUser(ctx echo.Context) error {
 		}
 
 		ctx.Response().Flush()
-
-		//Sleep to simulate heavyweight process
-		time.Sleep(1 * time.Second)
 	}
 
 	return ctx.String(http.StatusOK, fmt.Sprintf("There are %v users", size))
