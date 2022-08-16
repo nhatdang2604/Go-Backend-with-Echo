@@ -26,9 +26,15 @@ func main() {
 	server.GET(constant.ADMIN_PATH, handler.Hello, isLoggedIn, isAdmin)
 	server.POST(constant.LOGIN_PATH, handler.Login, middleware.BasicAuth(mw.BasicAuth))
 
-	//Grouping API
+	//Grouping API testing
 	groupv2 := server.Group(constant.GROUP_API_PATH)
 	groupv2.GET(constant.HELLO_PATH, handler.Hello2)
+
+	//Keep grouping for User APIs
+	groupUser := server.Group(constant.USER_GROUP_PATH)
+	groupUser.GET(constant.USER_GET_PATH, handler.GetUser)
+	groupUser.GET(constant.USER_UPDATE_PATH, handler.UpdateUser)
+	groupUser.GET(constant.USER_DELETE_PATH, handler.DeleteUser)
 
 	//Run the server
 	server.Logger.Fatal(server.Start(":" + constant.PORT))
