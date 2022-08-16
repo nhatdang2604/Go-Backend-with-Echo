@@ -5,19 +5,22 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/beego/beego/orm"
 	"github.com/labstack/echo/v4"
 )
 
 type User struct {
-	Name string
-	Age  int32
+	Id    int32  `orm:"auto;pk"`
+	Name  string `orm:"size(30)"`
+	Age   int32
+	Phone string `orm:"size(11)`
 }
 
-// func init() {
+func init() {
 
-// 	//init the model from database for Beego
-// 	orm.RegisterModel(new(User))
-// }
+	//init the model from database for Beego
+	orm.RegisterModel(new(User))
+}
 
 //Mock data
 var users = []User{

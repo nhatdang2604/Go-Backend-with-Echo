@@ -30,7 +30,7 @@ func init() {
 
 	//Synchronize config in connection
 	name := "default" //database alias
-	force := true     //drop the table and re-create after running code
+	force := false    //drop the table and re-create after running code
 	verbose := true   //logging on
 	err = orm.RunSyncdb(name, force, verbose)
 
