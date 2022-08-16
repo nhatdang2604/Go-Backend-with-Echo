@@ -11,6 +11,7 @@ import (
 const ()
 
 func main() {
+
 	server := echo.New()
 
 	//Middlewares must be registered before adding root path handler
