@@ -37,4 +37,7 @@ const (
 	// Note: storing secret key hardcodely is a bad design.
 	//	Only using for learning purpose
 	SECRET_KEY = "secret_key"
+
+	//Parameter from user's request
+	PARAM_USER_ID = "id"
 )

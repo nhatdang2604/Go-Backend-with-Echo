@@ -3,11 +3,13 @@ package handler
 import (
 	"encoding/json"
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/beego/beego/orm"
 	"github.com/golang/glog"
 	"github.com/labstack/echo/v4"
+	"github.com/nhatdang2604/Go-Backend-with-Echo/user_manager/constant"
 )
 
 type User struct {
@@ -58,7 +60,28 @@ func AddUser(ctx echo.Context) error {
 }
 
 func GetUser(ctx echo.Context) error {
-	return ctx.String(http.StatusOK, "API Get User")
+
+	//Get the id from request
+	raw, err := strconv.Atoi(ctx.QueryParam(constant.PARAM_USER_ID))
+	if nil != err {
+		glog.Errorf("Invalid id value: %v\r\n", err)
+		return err
+	}
+
+	id := int32(raw)
+
+	o := orm.NewOrm()
+	user := &User{Id: id}
+
+	err = o.Read(user)
+
+	if nil != err {
+		glog.Errorf("Error on get user from database: %v\r\n", err)
+		return err
+	}
+
+	glog.Infof("Get user with id=%v from database: %v", id, user)
+	return ctx.JSON(http.StatusOK, user)
 }
 
 func UpdateUser(ctx echo.Context) error {
