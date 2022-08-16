@@ -65,7 +65,7 @@ func main() {
 	groupUser := server.Group(constant.USER_GROUP_PATH, isLoggedIn)
 	groupUser.GET(constant.USER_GET_PATH, handler.GetUser)
 	groupUser.PUT(constant.USER_ADD_PATH, handler.AddUser)
-	groupUser.GET(constant.USER_UPDATE_PATH, handler.UpdateUser, isAdmin)
+	groupUser.PUT(constant.USER_UPDATE_PATH, handler.UpdateUser, isAdmin)
 	groupUser.GET(constant.USER_DELETE_PATH, handler.DeleteUser, isAdmin)
 	groupUser.GET(constant.USER_GET_ALL_PATH, handler.GetAllUser)
 

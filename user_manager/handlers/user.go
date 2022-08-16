@@ -85,7 +85,31 @@ func GetUser(ctx echo.Context) error {
 }
 
 func UpdateUser(ctx echo.Context) error {
-	return ctx.String(http.StatusOK, "API Update User")
+
+	user := &User{}
+	if err := ctx.Bind(user); nil != err {
+		glog.Errorf("Binding user error: %v", err)
+		return err
+	}
+	id := user.Id
+	glog.Infof("Request update user with id=%v", id)
+	o := orm.NewOrm()
+	_, err := o.Update(user)
+
+	if nil != err {
+		glog.Errorf("Update user with id=%v failed: %v", id, err)
+		return err
+	}
+
+	//Try to re-read the updated user
+	err = o.Read(user)
+
+	if nil != err {
+		glog.Errorf("Error on re-reading the updated user: %v", err)
+		return err
+	}
+
+	return ctx.JSON(http.StatusOK, user)
 }
 
 func DeleteUser(ctx echo.Context) error {
