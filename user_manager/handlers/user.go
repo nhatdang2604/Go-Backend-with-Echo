@@ -6,14 +6,15 @@ import (
 	"time"
 
 	"github.com/beego/beego/orm"
+	"github.com/golang/glog"
 	"github.com/labstack/echo/v4"
 )
 
 type User struct {
-	Id    int32  `orm:"auto;pk"`
-	Name  string `orm:"size(30)"`
-	Age   int32
-	Phone string `orm:"size(11)`
+	Id    int32  `orm:"auto;pk" json:"id"`
+	Name  string `orm:"size(30)" json:"name"`
+	Age   int32  `json:age`
+	Phone string `orm:"size(11) json:"phone"`
 }
 
 func init() {
@@ -31,6 +32,27 @@ var users = []User{
 	{Name: "test4", Age: 22},
 	{Name: "test5", Age: 23},
 	{Name: "test6", Age: 24},
+}
+
+func AddUser(ctx echo.Context) error {
+
+	//Get the user via json from the request
+	user := &User{}
+	if err := ctx.Bind(user); nil != err {
+		glog.Errorf("Binding user with error: %v\r\n", err)
+	}
+
+	//Insert the bind user
+	o := orm.NewOrm()
+	id, err := o.Insert(user)
+
+	if nil != err {
+		glog.Errorf("Insert user with error: %v\r\n", err)
+	}
+
+	glog.Info("Insert userat row %d", id)
+
+	return nil
 }
 
 func GetUser(ctx echo.Context) error {

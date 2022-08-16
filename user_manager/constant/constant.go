@@ -10,6 +10,7 @@ const (
 	LOGIN_PATH        = "/login/"
 	ADMIN_PATH        = "/admin/"
 	HELLO_PATH        = "/hello/"
+	USER_ADD_PATH     = "/add/"
 	USER_GET_PATH     = "/get/"
 	USER_UPDATE_PATH  = "/update/"
 	USER_DELETE_PATH  = "/delete/"
