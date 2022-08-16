@@ -2,6 +2,7 @@ package handler
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"strconv"
 	"time"
@@ -23,17 +24,6 @@ func init() {
 
 	//init the model from database for Beego
 	orm.RegisterModel(new(User))
-}
-
-//Mock data
-var users = []User{
-	{Name: "test0", Age: 18},
-	{Name: "test1", Age: 19},
-	{Name: "test2", Age: 20},
-	{Name: "test3", Age: 21},
-	{Name: "test4", Age: 22},
-	{Name: "test5", Age: 23},
-	{Name: "test6", Age: 24},
 }
 
 func AddUser(ctx echo.Context) error {
@@ -136,6 +126,18 @@ func DeleteUser(ctx echo.Context) error {
 
 func GetAllUser(ctx echo.Context) error {
 
+	//Preparing for querying
+	var users []*User
+	o := orm.NewOrm()
+	querySetter := o.QueryTable(constant.DB_TABLE_NAME_USER)
+
+	size, err := querySetter.All(&users)
+
+	if nil != err {
+		glog.Errorf("Querying with error: %v", err)
+		return err
+	}
+
 	//Header editing
 	ctx.Response().Header().Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 	ctx.Response().WriteHeader(http.StatusOK)
@@ -152,5 +154,5 @@ func GetAllUser(ctx echo.Context) error {
 		time.Sleep(1 * time.Second)
 	}
 
-	return nil
+	return ctx.String(http.StatusOK, fmt.Sprintf("There are %v users", size))
 }

@@ -33,6 +33,9 @@ const (
 	DB_PWD     = "812010"
 	DB_CHARSET = "utf8"
 
+	//Database schema's name
+	DB_TABLE_NAME_USER = "user"
+
 	//secret key
 	// Note: storing secret key hardcodely is a bad design.
 	//	Only using for learning purpose
