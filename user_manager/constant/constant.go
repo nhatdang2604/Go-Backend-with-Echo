@@ -33,8 +33,8 @@ const (
 
 	//Database config
 	DB_NAME    = "echotest"
-	DB_USER    = "dangkl123"
-	DB_PWD     = "812010"
+	DB_USER    = "test"
+	DB_PWD     = "test"
 	DB_CHARSET = "utf8"
 
 	//Database schema's name
