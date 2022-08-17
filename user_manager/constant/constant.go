@@ -1,5 +1,9 @@
 package constant
 
+import (
+	"time"
+)
+
 const (
 
 	//Address
@@ -43,4 +47,11 @@ const (
 
 	//Parameter from user's request
 	PARAM_USER_ID = "id"
+
+	//Cache config
+	CACHE_HOST       = "localhost"
+	CACHE_PORT       = "6379"
+	CACHE_ADDR       = CACHE_HOST + ":" + CACHE_PORT
+	CACHE_DB         = 0
+	CACHE_EXPIRATION = 5 * time.Minute
 )

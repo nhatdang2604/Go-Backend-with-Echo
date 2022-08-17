@@ -5,15 +5,25 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
+	"time"
 
 	"github.com/beego/beego/orm"
 	"github.com/golang/glog"
 	"github.com/labstack/echo/v4"
+	"github.com/nhatdang2604/Go-Backend-with-Echo/user_manager/cache"
 	"github.com/nhatdang2604/Go-Backend-with-Echo/user_manager/constant"
 	"github.com/nhatdang2604/Go-Backend-with-Echo/user_manager/models"
 )
 
-type UserService struct{}
+type UserService struct {
+	Cache cache.ICache
+}
+
+func NewUserService(host string, db int, exp time.Duration) *UserService {
+	service := new(UserService)
+	service.Cache = cache.NewRedisCache(host, db, exp)
+	return service
+}
 
 func (service *UserService) Add(ctx echo.Context) error {
 
@@ -49,17 +59,36 @@ func (service *UserService) Get(ctx echo.Context) error {
 
 	id := int32(raw)
 
-	o := orm.NewOrm()
-	user := &models.User{Id: id}
+	//Try to get the user from cache
+	rawData := service.Cache.Get(id)
+	var user *models.User
 
-	err = o.Read(user)
+	//Cache miss
+	if nil == rawData {
 
-	if nil != err {
-		glog.Errorf("Error on get user from database: %v\r\n", err)
-		return err
+		//Get the user from databse
+		o := orm.NewOrm()
+		user = &models.User{Id: id}
+
+		err = o.Read(user)
+
+		if nil != err {
+			glog.Errorf("Error on get user from database: %v\r\n", err)
+			return err
+		}
+	} else {
+
+		user = rawData.(*models.User)
+
+		//Log for learning
+		glog.Info("Cache hit!\r\n")
 	}
 
 	glog.Infof("Get user with id=%v from database: %v", id, user)
+
+	//Save/Refresh the got user to cache
+	service.Cache.Set(id, user)
+
 	return ctx.JSON(http.StatusOK, user)
 }
 

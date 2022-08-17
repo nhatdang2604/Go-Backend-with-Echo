@@ -64,7 +64,11 @@ func main() {
 	groupv2.GET(constant.HELLO_PATH, handler.Hello2)
 
 	//Service for injecting handler
-	userService := service.UserService{}
+	userService := service.NewUserService(
+		constant.CACHE_ADDR,
+		constant.CACHE_DB,
+		constant.CACHE_EXPIRATION,
+	)
 
 	//Keep grouping for User APIs
 	groupUser := server.Group(constant.USER_GROUP_PATH, isLoggedIn)
