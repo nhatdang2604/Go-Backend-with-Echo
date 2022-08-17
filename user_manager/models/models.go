@@ -1,5 +1,12 @@
 package models
 
+type User struct {
+	Id    int32  `orm:"auto" json:"id" form:"id"`
+	Name  string `orm:"size(30)" json:"name" form:"name"`
+	Age   int32  `json:"age" form:"age"`
+	Phone string `orm:"size(11)" json:"phone" form:"phone"`
+}
+
 type Message struct {
 	Text string
 }

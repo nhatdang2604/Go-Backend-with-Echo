@@ -10,25 +10,19 @@ import (
 	"github.com/golang/glog"
 	"github.com/labstack/echo/v4"
 	"github.com/nhatdang2604/Go-Backend-with-Echo/user_manager/constant"
+	"github.com/nhatdang2604/Go-Backend-with-Echo/user_manager/models"
 )
-
-type User struct {
-	Id    int32  `orm:"auto" json:"id" form:"id"`
-	Name  string `orm:"size(30)" json:"name" form:"name"`
-	Age   int32  `json:"age" form:"age"`
-	Phone string `orm:"size(11)" json:"phone" form:"phone"`
-}
 
 func init() {
 
 	//init the model from database for Beego
-	orm.RegisterModel(new(User))
+	orm.RegisterModel(new(models.User))
 }
 
 func AddUser(ctx echo.Context) error {
 
 	//Get the user via json from the request
-	user := &User{}
+	user := &models.User{}
 	if err := ctx.Bind(user); nil != err {
 		glog.Errorf("Binding user with error: %v\r\n", err)
 		return err
@@ -60,7 +54,7 @@ func GetUser(ctx echo.Context) error {
 	id := int32(raw)
 
 	o := orm.NewOrm()
-	user := &User{Id: id}
+	user := &models.User{Id: id}
 
 	err = o.Read(user)
 
@@ -75,7 +69,7 @@ func GetUser(ctx echo.Context) error {
 
 func UpdateUser(ctx echo.Context) error {
 
-	user := &User{}
+	user := &models.User{}
 	if err := ctx.Bind(user); nil != err {
 		glog.Errorf("Binding user error: %v", err)
 		return err
@@ -110,7 +104,7 @@ func DeleteUser(ctx echo.Context) error {
 	}
 
 	id := int32(raw)
-	user := &User{Id: id}
+	user := &models.User{Id: id}
 
 	o := orm.NewOrm()
 	_, err = o.Delete(user)
@@ -126,7 +120,7 @@ func DeleteUser(ctx echo.Context) error {
 func GetAllUser(ctx echo.Context) error {
 
 	//Preparing for querying
-	var users []*User
+	var users []*models.User
 	o := orm.NewOrm()
 	querySetter := o.QueryTable(constant.DB_TABLE_NAME_USER)
 
