@@ -145,6 +145,12 @@ func (service *UserService) Delete(ctx echo.Context) error {
 		return err
 	}
 
+	//Check if the updated user exists in the cache => update it for data consitency
+	rawData := service.Cache.Get(id)
+	if nil != rawData {
+		service.Cache.Set(id, nil)
+	}
+
 	return ctx.String(http.StatusOK, "Delete successfully")
 }
 
