@@ -9,6 +9,7 @@ import (
 	"github.com/nhatdang2604/Go-Backend-with-Echo/user_manager/constant"
 	handler "github.com/nhatdang2604/Go-Backend-with-Echo/user_manager/handlers"
 	mw "github.com/nhatdang2604/Go-Backend-with-Echo/user_manager/middlewares"
+	service "github.com/nhatdang2604/Go-Backend-with-Echo/user_manager/services"
 )
 
 func init() {
@@ -62,13 +63,16 @@ func main() {
 	groupv2 := server.Group(constant.GROUP_API_PATH)
 	groupv2.GET(constant.HELLO_PATH, handler.Hello2)
 
+	//Service for injecting handler
+	userService := service.UserService{}
+
 	//Keep grouping for User APIs
 	groupUser := server.Group(constant.USER_GROUP_PATH, isLoggedIn)
-	groupUser.GET(constant.USER_GET_PATH, handler.GetUser)
-	groupUser.POST(constant.USER_ADD_PATH, handler.AddUser, isAdmin)
-	groupUser.PUT(constant.USER_UPDATE_PATH, handler.UpdateUser, isAdmin)
-	groupUser.DELETE(constant.USER_DELETE_PATH, handler.DeleteUser, isAdmin)
-	groupUser.GET(constant.USER_GET_ALL_PATH, handler.GetAllUser, isAdmin)
+	groupUser.GET(constant.USER_GET_PATH, userService.Get)
+	groupUser.POST(constant.USER_ADD_PATH, userService.Add, isAdmin)
+	groupUser.PUT(constant.USER_UPDATE_PATH, userService.Update, isAdmin)
+	groupUser.DELETE(constant.USER_DELETE_PATH, userService.Delete, isAdmin)
+	groupUser.GET(constant.USER_GET_ALL_PATH, userService.GetAll, isAdmin)
 
 	//Run the server
 	server.Logger.Fatal(server.Start(":" + constant.PORT))
